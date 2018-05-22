@@ -17,6 +17,8 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
+        // checks if all feeds have url by adding 1 for each feed with url and 
+        // comparing the result with allFeeds length
         it('Urls are defined', function() {
             let feedsWithUrl = 0;
             for (const feed of allFeeds) {
@@ -24,10 +26,12 @@ $(function() {
                     feedsWithUrl++;
                 }
             }
-
+            
             expect(allFeeds.length).toBe(feedsWithUrl);
         });
 
+        // checks if all feeds have names by adding 1 for each feed with name and 
+        // comparing the result with allFeeds length
         it('Names are defined', function() {
             let feedsWithName = 0;
             for (const feed of allFeeds) {
@@ -42,10 +46,15 @@ $(function() {
 
     describe('The menu', function () {
 
+
+        // checks if menu is hiden by default checking if the body has the 
+        // menu-hidden class
         it('Menu is hidden by default', function() {
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
+
+        // checks if menu is toggled(has menu-hidden) after clicks
         it('Menu toggles on click', function() {
             $('.menu-icon-link').click();
             expect($('body').hasClass('menu-hidden')).toBe(false);
@@ -57,12 +66,14 @@ $(function() {
 
     describe('Initial Entries', function() {
         
+        //Loads initial feed
         beforeEach(function(done) {
             loadFeed(0,function() {
                 done();
             });
         });
 
+        //checks if any of its children has the entry class
         it(`Feed container has at least 1 entry`, function(done) {
             expect($('.feed').children('.entry-link').children('.entry').length > 0).toBe(true);
             done();
@@ -74,6 +85,9 @@ $(function() {
     describe('New Feed Selection', function() {
 
         let feed0;
+
+        // sets the first loadFeed function callback to store current feed html and call
+        // loadFeed again with a new index
         beforeEach(function(done) {
             loadFeed(0,function() {
                 feed0 = $('.feed').html();
@@ -83,6 +97,7 @@ $(function() {
             });
         });
 
+        // compares initial feed html with the new one 
         it(`Content should change after new feed is loaded`, function(done) {
             expect($('.feed').html()).not.toBe(feed0);
             done();
